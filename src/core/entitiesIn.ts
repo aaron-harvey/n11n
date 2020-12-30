@@ -36,7 +36,7 @@ function setEntities<T>(
   schemaEntities: Entity<T>[]
 ): void {
   schemaEntities.forEach(({ extract, merge, name, prop }) => {
-    const entityB = item[prop as keyof T];
+    const entityB = (item as any)[prop] as T | T[];
 
     if (!entityB) return;
 
@@ -44,7 +44,7 @@ function setEntities<T>(
 
     const keys = extract(item) as string | string[];
 
-    const set = (b: unknown, key: string | number) =>
+    const set = (b: T, key: string | number) =>
       setEntity(entities, b, `${key}`, name, merge);
 
     entityB instanceof Array

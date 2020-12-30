@@ -10,6 +10,6 @@ export function accessorFor<T>(
   fn: (t: T) => unknown
 ): (item: T) => unknown {
   return isArrayKey
-    ? (data: Record<string, any>) => (data[prop] || []).map(fn)
-    : (data: Record<string, T>) => fn(data[prop]);
+    ? (data: any) => ((data[prop] || []) as T[]).map(fn)
+    : (data: any) => fn(data[prop] as T);
 }
